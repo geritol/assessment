@@ -76,6 +76,7 @@ export const spellOutNumber = inputNumber => {
     const onesPlase = inputNumber % 10
     return `${tens[tensPlace]}-${singleDigitsToString[onesPlase]}`
   }
+  // LARGE NUMBERS (> 99)
   for (let i = 0; i < largeNumbers.length; i++) {
     const current = largeNumbers[i]
     const upperEnd = current.end || largeNumbers[i + 1].start
@@ -93,4 +94,9 @@ export const spellOutNumber = inputNumber => {
     const rest = inputNumber - biggestPlace * lowerEnd
     return `${biggestPlaceString}${delimiter}${spellOutNumber(rest)}`
   }
+  throw new Error(
+    `Inputted number (${inputNumber}) is larger than the biggest supported number (${largeNumbers[
+      largeNumbers.length - 1
+    ] - 1})`
+  )
 }

@@ -100,4 +100,7 @@ describe("spellOutNumber", () => {
       )
     )
   })
+  test("throws error if an unsopported large number is inputted", () => {
+    expect(() => spellOutNumber(1000000000)).toThrow()
+  })
 })
