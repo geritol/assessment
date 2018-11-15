@@ -66,5 +66,38 @@ describe("spellOutNumber", () => {
       "999 is nine hundred and ninety-nine",
       spellOutMacro.bind(this, 999, "nine hundred and ninety-nine")
     )
+    test("1000 is one thousand", spellOutMacro.bind(this, 1000, "one thousand"))
+    test(
+      "2001 is two thousand and one",
+      spellOutMacro.bind(this, 2001, "two thousand and one")
+    )
+    test(
+      "999000 is nine hundred and ninety-nine thousand",
+      spellOutMacro.bind(this, 999000, "nine hundred and ninety-nine thousand")
+    )
+    test(
+      "999999 is nine hundred and ninety-nine thousand and nine hundred and ninety-nine",
+      spellOutMacro.bind(
+        this,
+        999999,
+        "nine hundred and ninety-nine thousand and nine hundred and ninety-nine"
+      )
+    )
+    test(
+      "1000000 is one million",
+      spellOutMacro.bind(this, 1000000, "one million")
+    )
+    test(
+      "11000000 is one million",
+      spellOutMacro.bind(this, 11000000, "eleven million")
+    )
+    test(
+      "999999999 is nine hundred and ninety-nine million, nine hundred and ninety-nine thousand and nine hundred and ninety-nine",
+      spellOutMacro.bind(
+        this,
+        999999999,
+        "nine hundred and ninety-nine million, nine hundred and ninety-nine thousand and nine hundred and ninety-nine"
+      )
+    )
   })
 })

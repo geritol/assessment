@@ -35,6 +35,25 @@ const tens = {
   90: "ninety"
 }
 
+const largeNumbers = [
+  {
+    start: 100,
+    spellOut: "hundred",
+    delimiter: " and "
+  },
+  {
+    start: 1000,
+    spellOut: "thousand",
+    delimiter: " and "
+  },
+  {
+    start: 1000000,
+    end: 1000000000,
+    spellOut: "million",
+    delimiter: ", "
+  }
+]
+
 /*
  *  Returns the inputtend number in its english written form
  *  Integer -> String
@@ -57,14 +76,21 @@ export const spellOutNumber = inputNumber => {
     const onesPlase = inputNumber % 10
     return `${tens[tensPlace]}-${singleDigitsToString[onesPlase]}`
   }
-  if (inputNumber < 1000) {
-    const hundredsPlace = Math.floor(inputNumber / 100)
-    const hundredsPlaceString = `${singleDigitsToString[hundredsPlace]} hundred`
-    if (inputNumber % 100 === 0) {
-      return hundredsPlaceString
+  for (let i = 0; i < largeNumbers.length; i++) {
+    const current = largeNumbers[i]
+    const upperEnd = current.end || largeNumbers[i + 1].start
+    if (inputNumber >= upperEnd) {
+      continue
     }
-    return `${hundredsPlaceString} and ${spellOutNumber(
-      inputNumber - hundredsPlace * 100
-    )}`
+
+    const { start: lowerEnd, spellOut, delimiter } = current
+    const biggestPlace = Math.floor(inputNumber / lowerEnd)
+    const biggestPlaceString = `${spellOutNumber(biggestPlace)} ${spellOut}`
+
+    if (inputNumber % lowerEnd === 0) {
+      return biggestPlaceString
+    }
+    const rest = inputNumber - biggestPlace * lowerEnd
+    return `${biggestPlaceString}${delimiter}${spellOutNumber(rest)}`
   }
 }
