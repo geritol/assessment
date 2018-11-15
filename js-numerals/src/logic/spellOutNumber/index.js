@@ -1,0 +1,1 @@
+export { spellOutNumber } from "./spellOutNumber"
