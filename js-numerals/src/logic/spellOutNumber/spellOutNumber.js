@@ -57,4 +57,14 @@ export const spellOutNumber = inputNumber => {
     const onesPlase = inputNumber % 10
     return `${tens[tensPlace]}-${singleDigitsToString[onesPlase]}`
   }
+  if (inputNumber < 1000) {
+    const hundredsPlace = Math.floor(inputNumber / 100)
+    const hundredsPlaceString = `${singleDigitsToString[hundredsPlace]} hundred`
+    if (inputNumber % 100 === 0) {
+      return hundredsPlaceString
+    }
+    return `${hundredsPlaceString} and ${spellOutNumber(
+      inputNumber - hundredsPlace * 100
+    )}`
+  }
 }

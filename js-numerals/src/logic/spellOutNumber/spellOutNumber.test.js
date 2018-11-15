@@ -56,4 +56,15 @@ describe("spellOutNumber", () => {
     test("98 is ninety-eight", spellOutMacro.bind(this, 98, "ninety-eight"))
     test("99 is ninety-nine", spellOutMacro.bind(this, 99, "ninety-nine"))
   })
+  describe("integers bigger than 99", () => {
+    test("100 is one hundred", spellOutMacro.bind(this, 100, "one hundred"))
+    test(
+      "242 is two hundred and forty-two",
+      spellOutMacro.bind(this, 242, "two hundred and forty-two")
+    )
+    test(
+      "999 is nine hundred and ninety-nine",
+      spellOutMacro.bind(this, 999, "nine hundred and ninety-nine")
+    )
+  })
 })
