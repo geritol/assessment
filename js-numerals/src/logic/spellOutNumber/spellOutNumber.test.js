@@ -88,7 +88,7 @@ describe("spellOutNumber", () => {
       spellOutMacro.bind(this, 1000000, "one million")
     )
     test(
-      "11000000 is one million",
+      "11000000 is eleven million",
       spellOutMacro.bind(this, 11000000, "eleven million")
     )
     test(
