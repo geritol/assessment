@@ -24,6 +24,17 @@ const teenNumbers = {
   19: "nineteen"
 }
 
+const tens = {
+  20: "twenty",
+  30: "thirty",
+  40: "forty",
+  50: "fifty",
+  60: "sixty",
+  70: "seventy",
+  80: "eighty",
+  90: "ninety"
+}
+
 /*
  *  Returns the inputtend number in its english written form
  *  Integer -> String
@@ -37,5 +48,13 @@ export const spellOutNumber = inputNumber => {
   }
   if (inputNumber < 20) {
     return teenNumbers[inputNumber]
+  }
+  if (inputNumber < 100) {
+    if (inputNumber % 10 === 0) {
+      return tens[inputNumber]
+    }
+    const tensPlace = Math.floor(inputNumber / 10) * 10
+    const onesPlase = inputNumber % 10
+    return `${tens[tensPlace]}-${singleDigitsToString[onesPlase]}`
   }
 }
