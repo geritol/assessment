@@ -48,6 +48,6 @@ export const spellOutNumber = inputNumber => {
   throw new Error(
     `Inputted number (${inputNumber}) is larger than the biggest supported number (${largeNumbers[
       largeNumbers.length - 1
-    ] - 1})`
+    ].end - 1})`
   )
 }
