@@ -11,6 +11,19 @@ const singleDigitsToString = {
   9: "nine"
 }
 
+const teenNumbers = {
+  10: "ten",
+  11: "eleven",
+  12: "twelve",
+  13: "thirteen",
+  14: "fourteen",
+  15: "fifteen",
+  16: "sixteen",
+  17: "seventeen",
+  18: "eighteen",
+  19: "nineteen"
+}
+
 /*
  *  Returns the inputtend number in its english written form
  *  Integer -> String
@@ -21,5 +34,8 @@ export const spellOutNumber = inputNumber => {
   }
   if (inputNumber < 10) {
     return singleDigitsToString[inputNumber]
+  }
+  if (inputNumber < 20) {
+    return teenNumbers[inputNumber]
   }
 }
