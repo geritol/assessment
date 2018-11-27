@@ -1,8 +1,10 @@
 import * as Koa from 'koa';
-const app = new Koa();
+import * as bodyParser from 'koa-bodyparser';
 
-app.use(async (ctx) => {
-  ctx.body = 'Hello World';
-});
+import { router } from './routes';
+
+const app = new Koa();
+app.use(bodyParser());
+app.use(router.routes());
 
 export default app;
