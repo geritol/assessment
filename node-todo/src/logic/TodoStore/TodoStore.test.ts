@@ -30,26 +30,26 @@ describe('TodoStore', () => {
     expect(() => new TodoStore(todosList)).toThrow();
   });
   describe('.add()', () => {
-    test('adding a valid todo should return its id', async () => {
+    test('adding a valid todo should return its id', () => {
       const todoStore = new TodoStore();
       const todo = new Todo();
       todo.text = 'should test the code';
-      const todoId = await todoStore.add(todo);
+      const todoId = todoStore.add(todo);
       expect(typeof todoId).toBe('string');
     });
-    test('valid todo should be added to the todos', async () => {
+    test('valid todo should be added to the todos', () => {
       const todoStore = new TodoStore();
       const todo = new Todo();
       todo.text = 'should test the code';
-      await todoStore.add(todo);
+      todoStore.add(todo);
       const todos = todoStore.findAll();
       delete todos[0].id;
       expect(todos).toEqual([todo]);
     });
-    test('error should be thrown when adding an invalid todo', async () => {
+    test('error should be thrown when adding an invalid todo', () => {
       const todoStore = new TodoStore();
       const todo = new Todo();
-      await expect(todoStore.add(todo)).rejects.toThrow();
+      expect(() => todoStore.add(todo)).toThrow();
     });
   });
   describe('.findById()', () => {

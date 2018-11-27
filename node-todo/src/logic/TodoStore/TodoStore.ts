@@ -20,7 +20,7 @@ export class TodoStore {
   public findAll() {
     return [...this.todosList];
   }
-  public async add(todo: Todo) {
+  public add(todo: Todo) {
     const todoCopy = copyInstance(todo);
     todoCopy.id = uuidv4();
     if (todoCopy.id in this.todos) {
