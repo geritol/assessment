@@ -38,4 +38,32 @@ describe('TodoStore', () => {
       await expect(todoStore.add(todo)).rejects.toThrow();
     });
   });
+  describe('.findById()', () => {
+    test('error should be thrown if todo not found', () => {
+      const todoStore = new TodoStore();
+      expect(() => todoStore.findById('1')).toThrow();
+    });
+    test('should return a todo item by id', async () => {
+      const todoStore = new TodoStore();
+      const todo = new Todo();
+      todo.text = 'should test the code';
+      const todoId = await todoStore.add(todo);
+      expect(todoStore.findById(todoId).text).toBe(todo.text);
+    });
+  });
+  describe('.delete()', () => {
+    test('error should be thrown if todo not found', () => {
+      const todoStore = new TodoStore();
+      expect(() => todoStore.delete('1')).toThrow();
+    });
+    test('should delete todo from collection', async () => {
+      const todoStore = new TodoStore();
+      const todo = new Todo();
+      todo.text = 'should test the code';
+      const todoId = await todoStore.add(todo);
+      todoStore.delete(todoId);
+      const todos = todoStore.findAll();
+      expect(todos).toEqual([]);
+    });
+  });
 });

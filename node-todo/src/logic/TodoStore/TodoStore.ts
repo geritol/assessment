@@ -6,6 +6,12 @@ import { Todo } from '../../types/entities/Todo';
 export class TodoStore {
   private todos: { [key: string]: Todo } = {};
 
+  public findById(id: string) {
+    if (!this.todoExists(id)) {
+      throw new Error('Todo not found');
+    }
+    return this.copyInstance(this.todos[id]);
+  }
   public findAll() {
     // Todo: implement a caching mechanism to improove performance
     return Object.keys(this.todos).map((todoKey) => this.todos[todoKey]);
@@ -14,11 +20,21 @@ export class TodoStore {
     const todoCopy = this.copyInstance(todo);
     todoCopy.id = uuidv4();
     await this.validateTodo(todoCopy);
-    if (todoCopy.id in this.todos) {
+    if (this.todoExists(todoCopy)) {
       return this.add(todo);
     }
     this.todos[todoCopy.id] = todoCopy;
     return todoCopy.id;
+  }
+  public delete(id: string) {
+    if (!this.todoExists(id)) {
+      throw new Error('Todo not found');
+    }
+    delete this.todos[id];
+  }
+
+  private todoExists(id: string) {
+    return id in this.todos;
   }
   private async validateTodo(todo: Todo) {
     const errors = await validate(todo);
