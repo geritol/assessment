@@ -4,15 +4,20 @@ import * as uuidv4 from 'uuid/v4';
 import { Todo } from '../../types/entities/Todo';
 
 export class TodoStore {
-  private todos: Todo[] = [];
+  private todos: { [key: string]: Todo } = {};
+
   public findAll() {
-    return [...this.todos];
+    // Todo: implement a caching mechanism to improove performance
+    return Object.keys(this.todos).map((todoKey) => this.todos[todoKey]);
   }
   public async add(todo: Todo) {
     const todoCopy = this.copyInstance(todo);
     todoCopy.id = uuidv4();
     await this.validateTodo(todoCopy);
-    this.todos.push(todoCopy);
+    if (todoCopy.id in this.todos) {
+      return this.add(todo);
+    }
+    this.todos[todoCopy.id] = todoCopy;
     return todoCopy.id;
   }
   private async validateTodo(todo: Todo) {
