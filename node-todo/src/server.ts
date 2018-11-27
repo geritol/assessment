@@ -1,3 +1,10 @@
+import 'reflect-metadata';
+
+import { Container } from 'typedi';
+import { TodoStore } from './logic/TodoStore';
+
+Container.set(TodoStore, new TodoStore([]));
+
 import app from './app';
 
 app.listen(3000);
