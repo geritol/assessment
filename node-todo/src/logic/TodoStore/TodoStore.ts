@@ -29,6 +29,18 @@ export class TodoStore {
     this.todos[todoCopy.id] = todoCopy;
     return todoCopy.id;
   }
+  public update(id: string, fields) {
+    const todo = this.todos[id];
+    const filteredFields = Object.keys(fields)
+      .filter((fieldKey) => Todo.editableProperties.indexOf(fieldKey) !== -1)
+      .reduce(
+        (filteredResult, key) => ({ ...filteredResult, [key]: fields[key] }),
+        {},
+      );
+    const newTodo = { ...todo, ...filteredFields };
+    this.todos[id] = newTodo;
+    return newTodo;
+  }
   public delete(id: string) {
     delete this.todos[id];
   }

@@ -80,4 +80,32 @@ describe('TodoStore', () => {
       expect(todos).toEqual([]);
     });
   });
+
+  describe('.update()', () => {
+    test('error should be thrown if todo not found', () => {
+      const todoStore = new TodoStore();
+      expect(() => todoStore.update('1', {})).toThrow();
+    });
+    test('should update allowed fields of the todo', async () => {
+      const todo = new Todo({ id: 11, text: 'tests are bad' });
+      const todoStore = new TodoStore([
+        new Todo({ id: '11', text: 'tests are bad' }),
+      ]);
+      todoStore.update(todo.id, {
+        done: true,
+        id: '111',
+        priority: 5,
+        text: 'tests are good',
+      });
+      const todos = todoStore.findAll();
+      expect(todos).toEqual([
+        {
+          done: true,
+          id: '11',
+          priority: 5,
+          text: 'tests are good',
+        },
+      ]);
+    });
+  });
 });

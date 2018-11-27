@@ -9,6 +9,8 @@ import {
 } from 'class-validator';
 
 export class Todo {
+  public static editableProperties = ['text', 'priority', 'done'];
+
   @IsString()
   public id: string;
 
