@@ -23,6 +23,11 @@ export const todosHandler = (handleChangeCallback) => ({
     return copyInstance(todos[id]);
   },
   set(todos, id, todo) {
+    if (todo.done) {
+      todo.expires = new Date(Date.now() + 5 * 60 * 1000);
+    } else {
+      delete todo.expires;
+    }
     validateTodo(todo);
     todos[id] = todo;
     handleChangeCallback();

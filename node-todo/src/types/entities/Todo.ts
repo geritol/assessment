@@ -26,8 +26,10 @@ export class Todo {
   @IsBoolean()
   public done: boolean = false;
 
+  public expires?: Date;
+
   constructor(todoObject: object = {}) {
-    const allowedProperties = ['id', ...Todo.editableProperties];
+    const allowedProperties = ['id', 'expires', ...Todo.editableProperties];
     allowedProperties.forEach((property) => {
       if (property in todoObject) {
         this[property] = todoObject[property];
