@@ -3,6 +3,7 @@ import { Container } from 'typedi';
 
 import { TodoStore } from '../logic/TodoStore';
 import { Todo } from '../types/entities';
+import { NotFoundError } from '../types/errors';
 
 export default class TodoController {
   public static async getTodos(ctx: BaseContext) {
@@ -12,11 +13,7 @@ export default class TodoController {
 
   public static async getTodo(ctx: BaseContext) {
     const todoStore = Container.get(TodoStore);
-    try {
-      ctx.body = todoStore.findById(ctx.params.id);
-    } catch (error) {
-      ctx.status = 404;
-    }
+    ctx.body = todoStore.findById(ctx.params.id);
   }
 
   public static async create(ctx: BaseContext) {
@@ -29,20 +26,12 @@ export default class TodoController {
 
   public static async update(ctx: BaseContext) {
     const todoStore = Container.get(TodoStore);
-    try {
-      ctx.body = todoStore.update(ctx.params.id, ctx.request.body);
-    } catch (error) {
-      ctx.status = 404;
-    }
+    ctx.body = todoStore.update(ctx.params.id, ctx.request.body);
   }
 
   public static async delete(ctx: BaseContext) {
     const todoStore = Container.get(TodoStore);
-    try {
-      todoStore.delete(ctx.params.id);
-      ctx.status = 200;
-    } catch (error) {
-      ctx.status = 404;
-    }
+    todoStore.delete(ctx.params.id);
+    ctx.status = 200;
   }
 }

@@ -43,6 +43,15 @@ describe('app', () => {
       const modifiedTodo = JSON.parse(response.text);
       expect(modifiedTodo.text).toBe(testModifiedText);
     });
+    test('PUT /todos/existing - with invalid values should get 400', async () => {
+      const testTodoId = 'existing';
+      const testModifiedText = 'test are awesome 0';
+      const server = createServer([new Todo({ text: 'test', id: testTodoId })]);
+      const response = await server.put(`/todos/${testTodoId}`).send({
+        text: testModifiedText,
+      });
+      expect(response.statusCode).toBe(400);
+    });
     test('DELETE /todos/nonexistent - should respond with 404', async () => {
       const response = await createServer().delete('/todos/nonexistent');
       expect(response.statusCode).toBe(404);
@@ -67,6 +76,11 @@ describe('app', () => {
       const todoList = JSON.parse(listAllResponse.text);
       expect(todoList.length).toBe(1);
       expect(todoList[0].text).toBe(testText);
+    });
+    test('POST /todos - invalid todo should get 400', async () => {
+      const server = createServer();
+      const createResponse = await server.post('/todos').send({ text: '333' });
+      expect(createResponse.statusCode).toBe(400);
     });
   });
 });

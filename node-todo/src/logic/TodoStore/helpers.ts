@@ -1,6 +1,7 @@
 import { validateSync } from 'class-validator';
 
 import { Todo } from '../../types/entities/Todo';
+import { NotFoundError, ValidationError } from '../../types/errors';
 
 export const copyInstance = (original) => {
   return Object.assign(
@@ -12,7 +13,7 @@ export const copyInstance = (original) => {
 export const validateTodo = (todo: Todo) => {
   const errors = validateSync(todo);
   if (errors.length > 0) {
-    throw new Error('Invalid todo');
+    throw new ValidationError('Invalid todo', errors);
   }
 };
 
@@ -35,7 +36,7 @@ export const todosHandler = (handleChangeCallback) => ({
   },
   assertTodoExists(todos, id) {
     if (!this.todoExists(todos, id)) {
-      throw new Error('Todo not found');
+      throw new NotFoundError('Todo not found', { todos, id });
     }
   },
   todoExists: (todos, id) => {

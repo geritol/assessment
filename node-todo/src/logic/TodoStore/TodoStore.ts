@@ -43,7 +43,8 @@ export class TodoStore {
         (filteredResult, key) => ({ ...filteredResult, [key]: fields[key] }),
         {},
       );
-    const newTodo = { ...todo, ...filteredFields };
+    const newTodo = new Todo({ ...todo, ...filteredFields });
+    validateTodo(newTodo);
     this.todos[id] = newTodo;
     return newTodo;
   }
@@ -52,6 +53,7 @@ export class TodoStore {
   }
   private createTodosObject(todos: Todo[]) {
     return todos.reduce((collection, todo) => {
+      todo = new Todo(todo);
       validateTodo(todo);
       return {
         ...collection,
