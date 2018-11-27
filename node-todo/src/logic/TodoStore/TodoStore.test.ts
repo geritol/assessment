@@ -15,6 +15,20 @@ describe('TodoStore', () => {
     const todosAferMutation = todoStore.findAll();
     expect(todosAferMutation).toEqual([]);
   });
+  test('should be initialisable with a list of Todos', () => {
+    const todosList = [new Todo(), new Todo()];
+    todosList[0].id = '1';
+    todosList[0].text = 'test';
+    todosList[1].id = '2';
+    todosList[1].text = 'test';
+    const todoStore = new TodoStore(todosList);
+    const todos = todoStore.findAll();
+    expect(todos).toEqual(todosList);
+  });
+  test("should'nt be initialisable with an invalid list of Todos", () => {
+    const todosList = [new Todo(), new Todo()];
+    expect(() => new TodoStore(todosList)).toThrow();
+  });
   describe('.add()', () => {
     test('adding a valid todo should return its id', async () => {
       const todoStore = new TodoStore();

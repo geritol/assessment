@@ -1,12 +1,18 @@
 import * as uuidv4 from 'uuid/v4';
 
 import { Todo } from '../../types/entities/Todo';
-import { copyInstance, todosHandler } from './helpers';
+import { copyInstance, todosHandler, validateTodo } from './helpers';
 
 export class TodoStore {
   private todosHandler = todosHandler(this.assembleTodosList.bind(this));
-  private todos: { [key: string]: Todo } = new Proxy({}, this.todosHandler);
-  private todosList: Todo[] = [];
+  private todos: { [key: string]: Todo };
+  private todosList: Todo[];
+
+  constructor(todos: Todo[] = []) {
+    const todosObject = this.createTodosObject(todos);
+    this.todos = new Proxy(todosObject, this.todosHandler);
+    this.assembleTodosList();
+  }
 
   public findById(id: string) {
     return this.todos[id];
@@ -26,7 +32,15 @@ export class TodoStore {
   public delete(id: string) {
     delete this.todos[id];
   }
-
+  private createTodosObject(todos: Todo[]) {
+    return todos.reduce((collection, todo) => {
+      validateTodo(todo);
+      return {
+        ...collection,
+        [todo.id]: copyInstance(todo),
+      };
+    }, {});
+  }
   private assembleTodosList() {
     this.todosList = Object.keys(this.todos).map(
       (todoKey) => this.todos[todoKey],
