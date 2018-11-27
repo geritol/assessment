@@ -4,12 +4,18 @@ import { Todo } from '../../types/entities/Todo';
 import { copyInstance, todosHandler, validateTodo } from './helpers';
 
 export class TodoStore {
-  private todosHandler = todosHandler(this.assembleTodosList.bind(this));
+  private onChangeCallback: (todos) => any;
+  private todosHandler: any;
   private todos: { [key: string]: Todo };
   private todosList: Todo[];
 
-  constructor(todos: Todo[] = []) {
+  constructor(todos: Todo[] = [], onChangeCallback = (_) => undefined) {
     const todosObject = this.createTodosObject(todos);
+    this.onChangeCallback = () => {
+      this.assembleTodosList();
+      onChangeCallback(this.todosList);
+    };
+    this.todosHandler = todosHandler(this.onChangeCallback.bind(this));
     this.todos = new Proxy(todosObject, this.todosHandler);
     this.assembleTodosList();
   }
