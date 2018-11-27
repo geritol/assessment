@@ -4,14 +4,15 @@ import { Todo } from '../../types/entities/Todo';
 import { copyInstance, todosHandler } from './helpers';
 
 export class TodoStore {
-  private todos: { [key: string]: Todo } = new Proxy({}, todosHandler);
+  private todosHandler = todosHandler(this.assembleTodosList.bind(this));
+  private todos: { [key: string]: Todo } = new Proxy({}, this.todosHandler);
+  private todosList: Todo[] = [];
 
   public findById(id: string) {
     return this.todos[id];
   }
   public findAll() {
-    // Todo: implement a caching mechanism to improove performance
-    return Object.keys(this.todos).map((todoKey) => this.todos[todoKey]);
+    return [...this.todosList];
   }
   public async add(todo: Todo) {
     const todoCopy = copyInstance(todo);
@@ -24,5 +25,11 @@ export class TodoStore {
   }
   public delete(id: string) {
     delete this.todos[id];
+  }
+
+  private assembleTodosList() {
+    this.todosList = Object.keys(this.todos).map(
+      (todoKey) => this.todos[todoKey],
+    );
   }
 }

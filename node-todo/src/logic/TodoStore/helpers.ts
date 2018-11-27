@@ -16,7 +16,7 @@ export const validateTodo = (todo: Todo) => {
   }
 };
 
-export const todosHandler = {
+export const todosHandler = (handleChangeCallback) => ({
   get(todos, id) {
     this.assertTodoExists(todos, id);
     return copyInstance(todos[id]);
@@ -24,11 +24,13 @@ export const todosHandler = {
   set(todos, id, todo) {
     validateTodo(todo);
     todos[id] = todo;
+    handleChangeCallback();
     return true;
   },
   deleteProperty(todos, id) {
     this.assertTodoExists(todos, id);
     delete todos[id];
+    handleChangeCallback();
     return true;
   },
   assertTodoExists(todos, id) {
@@ -39,4 +41,4 @@ export const todosHandler = {
   todoExists: (todos, id) => {
     return id in todos;
   },
-};
+});
