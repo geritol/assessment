@@ -16,11 +16,10 @@ describe('TodoStore', () => {
     expect(todosAferMutation).toEqual([]);
   });
   test('should be initialisable with a list of Todos', () => {
-    const todosList = [new Todo(), new Todo()];
-    todosList[0].id = '1';
-    todosList[0].text = 'test';
-    todosList[1].id = '2';
-    todosList[1].text = 'test';
+    const todosList = [
+      new Todo({ id: '1', text: 'test' }),
+      new Todo({ id: '2', text: 'test' }),
+    ];
     const todoStore = new TodoStore(todosList);
     const todos = todoStore.findAll();
     expect(todos).toEqual(todosList);

@@ -25,4 +25,13 @@ export class Todo {
 
   @IsBoolean()
   public done: boolean = false;
+
+  constructor(todoObject: object = {}) {
+    const allowedProperties = ['id', ...Todo.editableProperties];
+    allowedProperties.forEach((property) => {
+      if (property in todoObject) {
+        this[property] = todoObject[property];
+      }
+    });
+  }
 }
