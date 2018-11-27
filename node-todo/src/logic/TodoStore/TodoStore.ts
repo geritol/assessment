@@ -49,7 +49,6 @@ export class TodoStore {
         {},
       );
     const newTodo = new Todo({ ...todo, ...filteredFields });
-    validateTodo(newTodo);
     this.todos[id] = newTodo;
     return newTodo;
   }
