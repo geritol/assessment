@@ -28,6 +28,7 @@
     "typescript": "^3.1.6"
   },
   "dependencies": {
+    "class-validator": "^0.9.1",
     "koa": "^2.6.2",
     "koa-bodyparser": "^4.2.1",
     "winston": "^3.1.0"
